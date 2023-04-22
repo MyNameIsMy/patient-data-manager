@@ -10,6 +10,8 @@ import sukhushin.projects.patient.data.manager.entity.Patient;
 import sukhushin.projects.patient.data.manager.repository.PatientRepository;
 import sukhushin.projects.patient.data.manager.service.PatientService;
 
+import java.util.List;
+
 @Service
 public class PatientServiceImpl implements PatientService {
 
@@ -24,6 +26,14 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.save(patient);
 
         return new PatientDto(patient);
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public List<PatientDto> fetch() {
+        List<Patient> patients = patientRepository.findAll();
+
+        return patients.stream().map(PatientDto::new).toList();
     }
 
 }
