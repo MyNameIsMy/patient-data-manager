@@ -1,19 +1,18 @@
 package sukhushin.projects.patient.data.manager.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import sukhushin.projects.patient.data.manager.dto.PatientDto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="patients")
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 @NoArgsConstructor
 public class Patient {
 
@@ -27,6 +26,11 @@ public class Patient {
     private LocalDate dateOfBirth;
     @Column(name = "social_security_number", nullable = false)
     private String socialSecurityNumber;
+
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "patient_id")
+    private List<Visit> visits;
 
     public static Patient createNew(PatientDto patientDto) {
         Patient patient = new Patient();
