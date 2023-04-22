@@ -9,6 +9,8 @@ import sukhushin.projects.patient.data.manager.entity.Visit;
 import sukhushin.projects.patient.data.manager.repository.VisitRepository;
 import sukhushin.projects.patient.data.manager.service.VisitService;
 
+import java.util.List;
+
 @Service
 public class VisitServiceImpl implements VisitService {
 
@@ -23,5 +25,12 @@ public class VisitServiceImpl implements VisitService {
         visitRepository.save(visit);
 
         return new VisitDto(visit);
+    }
+
+    @Override
+    public List<VisitDto> fetch(Integer patientId) {
+        List<Visit> visitList = visitRepository.findByPatientId(patientId);
+
+        return visitList.stream().map(VisitDto::new).toList();
     }
 }
