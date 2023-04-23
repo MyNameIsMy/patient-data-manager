@@ -37,6 +37,7 @@ public class VisitServiceImpl implements VisitService {
         return visitList.stream().map(VisitDto::new).toList();
     }
 
+    //TODO: Isolation level and opt. or pes. locking should be properly configured
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public VisitDto update(Long id, VisitUpdateDto visitUpdateDto) {
