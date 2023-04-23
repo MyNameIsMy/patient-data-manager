@@ -1,10 +1,12 @@
 package sukhushin.projects.patient.data.manager.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import sukhushin.projects.patient.data.manager.dto.VisitDto;
+import sukhushin.projects.patient.data.manager.dto.VisitUpdateDto;
 import sukhushin.projects.patient.data.manager.entity.Visit;
 import sukhushin.projects.patient.data.manager.repository.VisitRepository;
 import sukhushin.projects.patient.data.manager.service.VisitService;
@@ -27,10 +29,21 @@ public class VisitServiceImpl implements VisitService {
         return new VisitDto(visit);
     }
 
+    //TODO: add handling the situation when patientId is not exist
     @Override
     public List<VisitDto> fetch(Integer patientId) {
         List<Visit> visitList = visitRepository.findByPatientId(patientId);
 
         return visitList.stream().map(VisitDto::new).toList();
+    }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public VisitDto update(Long id, VisitUpdateDto visitUpdateDto) {
+        Visit existedVisit = visitRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+        Visit updatedVisit = Visit.updateExisted(existedVisit, visitUpdateDto);
+
+        return new VisitDto(updatedVisit);
     }
 }
