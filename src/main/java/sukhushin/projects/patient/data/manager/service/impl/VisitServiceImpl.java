@@ -29,7 +29,6 @@ public class VisitServiceImpl implements VisitService {
         return new VisitDto(visit);
     }
 
-    //TODO: add handling the situation when patientId is not exist
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public List<VisitDto> fetch(Integer patientId) {
