@@ -10,6 +10,7 @@ import sukhushin.projects.patient.data.manager.enums.VisitType;
 import java.time.LocalDateTime;
 
 public record VisitDto(
+        @Schema(accessMode = Schema.AccessMode.READ_ONLY)
         @JsonProperty(value = "id") Long id,
         //TODO: Timezone should be configured properly
         @Schema(description = "Date and time of the visit in ISO 8601 format (yyyy-MM-dd'T'HH:mm:ss.SSS)", format = "date-time")

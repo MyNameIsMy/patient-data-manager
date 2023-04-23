@@ -8,6 +8,7 @@ import sukhushin.projects.patient.data.manager.entity.Patient;
 import java.time.LocalDate;
 
 public record PatientDto(
+        @Schema(accessMode = Schema.AccessMode.READ_ONLY)
         @JsonProperty(value = "id") Integer id,
         @JsonProperty(value = "name", required = true) String name,
         @JsonProperty(value = "surname", required = true) String surname,
