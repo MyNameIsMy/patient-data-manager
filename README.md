@@ -10,4 +10,7 @@ add there the 'config.properties', then you need add next configurations to this
 
 After that just build the maven project for 'local' profile and that it, you can start the application.
 
+When application is started, REST Api documentation is available under:
+http://localhost:8080/swagger-ui.html
+
 At the moment the project uses MySql RDBMS, but can be extended to use any other RDBMS as well in future releases.
